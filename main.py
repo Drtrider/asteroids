@@ -1,12 +1,15 @@
 import pygame
 
 from constants import *
+from player import *
 
 def main():
     # Init the game and some stuff for it
     pygame.init()
     game_clock = pygame.time.Clock()
     dt = 0
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
 
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -22,6 +25,7 @@ def main():
                 return
 
         screen.fill("Black")
+        player.draw(screen)
         pygame.display.flip()
 
         # Controls FPS of the game's window
