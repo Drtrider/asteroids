@@ -26,6 +26,7 @@ def main():
 
         screen.fill("Black")
         player.draw(screen)
+        player.update(dt)
         pygame.display.flip()
 
         # Controls FPS of the game's window
