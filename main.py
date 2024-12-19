@@ -5,6 +5,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from scoreboard import *
 
 
 def main():
@@ -28,6 +29,12 @@ def main():
 
     dt = 0
 
+    # Score board setup
+    scoreboard = Scoreboard(None, 64)
+
+    # font = pygame.font.Font(None, 64)
+    # text = font.render("Score: 0", True, "Red", None)
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,16 +46,34 @@ def main():
         for asteroid in asteroids:
             if asteroid.collides_with(player):
                 print("Game over!")
+                print
                 sys.exit()
 
         # Collision check for shots and asteroids
         for asteroid in asteroids:
             for bullet in shots:
                 if asteroid.collides_with(bullet):
+                    # Split the asteroid
                     asteroid.split()
                     bullet.kill()
 
+                    # Add points based on size killed
+                    if asteroid.radius == 60:
+                        scoreboard.add_points(3)
+                    elif asteroid.radius == 40:
+                        scoreboard.add_points(2)
+                    else:
+                        scoreboard.add_points(1)
+
         screen.fill("black")
+
+        # Add scoreboard text into the screen
+        current_score = scoreboard.get_score()
+        scoreboard_render = scoreboard.render(
+            f"Score: {current_score}", True, "Red", None)
+        textpos = scoreboard_render.get_rect(
+            centerx=screen.get_width() / 2, y=10)
+        screen.blit(scoreboard_render, textpos)
 
         for obj in drawable:
             obj.draw(screen)
