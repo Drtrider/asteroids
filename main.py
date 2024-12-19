@@ -46,7 +46,7 @@ def main():
         for asteroid in asteroids:
             if asteroid.collides_with(player):
                 print("Game over!")
-                print
+                print(f"Final Score: {scoreboard.get_score()}")
                 sys.exit()
 
         # Collision check for shots and asteroids
@@ -59,11 +59,11 @@ def main():
 
                     # Add points based on size killed
                     if asteroid.radius == 60:
-                        scoreboard.add_points(3)
+                        scoreboard.add_points(1)
                     elif asteroid.radius == 40:
                         scoreboard.add_points(2)
                     else:
-                        scoreboard.add_points(1)
+                        scoreboard.add_points(3)
 
         screen.fill("black")
 
